@@ -1,0 +1,40 @@
+package cmd
+
+var author = "elon996"
+var version = "v1.0.0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

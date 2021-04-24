@@ -1,0 +1,22 @@
+cve:
+  id: cve-2021-0222
+  product: thinkphp
+single: true
+requests:
+  - method: post
+    redirect:
+    path:
+      - /{{.name}}
+    headers:
+      - User-Agent: bot
+      - Content-Type: application/x-www-form-urlencoded
+    body: asd=qwe
+    detections:
+      - res.code==200
+    set:
+      - name: asd
+    search:
+
+
+
+
