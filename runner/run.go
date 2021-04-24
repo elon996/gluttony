@@ -55,6 +55,7 @@ func Multiplerun(job lib.Job ,thread int)  {
     defer p.Release()
 
     for _, request := range job.Poc.Requests {
+        rawurl := request.Url
         for _, pa := range request.Path{
             wg.Add(1)
             if !strings.HasPrefix(pa, "/") {
@@ -62,6 +63,7 @@ func Multiplerun(job lib.Job ,thread int)  {
             }
             request.Url = request.Url + pa
             _ = p.Invoke(request)
+            request.Url = rawurl
         }
     }
 

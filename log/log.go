@@ -1,13 +1,17 @@
 package log
 
-import (
-	"github.com/gluttony/color"
-)
+import "github.com/gluttony/color"
 
 var Log = New()
 
 type Logger struct {
 	Level int
+}
+
+type Logsend struct {
+	Level int
+	Format string
+	Args   []interface{}
 }
 
 func New() *Logger {
@@ -16,11 +20,36 @@ func New() *Logger {
 	}
 }
 
+var c = make(chan Logsend, 10)
 
 var ErrorLevel = 4
 var WarnLevel = 3
 var InfoLevel = 2
 var DebugLevel = 1
+
+func init()  {
+	go Sendfor()
+}
+
+func Sendfor()  {
+	for  {
+		t := <-c
+		switch t.Level {
+		case 1:
+			color.Cyanf("[Debu] "+t.Format+"\n", t.Args ...)
+			break
+		case 2:
+			color.Greenf("[Info] "+t.Format+"\n", t.Args ...)
+			break
+		case 3:
+			color.Yellowf("[Warn] "+t.Format+"\n", t.Args ...)
+			break
+		case 4:
+			color.Redf("[Erro] "+t.Format+"\n", t.Args ...)
+			break
+		}
+	}
+}
 
 
 func (logger *Logger) SetLevel(level int) {
@@ -31,26 +60,28 @@ func (logger *Logger) Debug(format string, args ...interface{}) {
 	if logger.Level > 1 {
 		return
 	}
-	color.Cyanf("[Debu] "+format+"\n", args ...)
+	c <- Logsend{DebugLevel ,format, args}
 }
 
 func (logger *Logger) Info(format string, args ...interface{}) {
 	if logger.Level > 2 {
 		return
 	}
-	color.Greenf("[Info] "+format+"\n", args ...)
+	c <- Logsend{InfoLevel ,format, args}
+
 }
 
 func (logger *Logger) Warn(format string, args ...interface{}) {
 	if logger.Level > 3 {
 		return
 	}
-	color.Yellowf("[Warn] "+format+"\n", args ...)
+	c <- Logsend{WarnLevel ,format, args}
+
 }
 
 func (logger *Logger) Error(format string, args ...interface{}) {
 	if logger.Level > 4 {
 		return
 	}
-	color.Redf("[Erro] "+format+"\n", args ...)
+	c <- Logsend{ErrorLevel ,format, args}
 }

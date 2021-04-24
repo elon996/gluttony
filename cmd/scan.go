@@ -6,6 +6,7 @@ import (
     "github.com/gluttony/runner"
     "github.com/panjf2000/ants"
     "sync"
+    "time"
 
     "github.com/spf13/cobra"
     "os"
@@ -50,6 +51,8 @@ func scan()  {
     }
 
     wg.Wait()
+    time.Sleep(time.Second*5)
+
 }
 
 func check()  {

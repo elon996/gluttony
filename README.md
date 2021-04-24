@@ -2,7 +2,7 @@
 
 Gluttony是一个http cve poc框架，使用它可以快速检测内网cve。
 
-#### 1.安装
+## 1.安装
 
 ```
 go get github.com/elon996/gluttony
@@ -10,20 +10,20 @@ go get github.com/elon996/gluttony
 
 
 
-#### 2.用法
+## 2.用法
 
 检测192.168.1.1的thinkphp漏洞
 
 p参数可以是文件或者文件夹
 
 ```
-gluttony scan scan -u 192.168.1.1 -p cve-2018-10225.yaml
-gluttony scan scan -u 192.168.1.1 -p cve
+gluttony scan -u 192.168.1.1 -p cve-2018-10225.yaml
+gluttony scan -u 192.168.1.1 -p cve
 ```
 
 
 
-#### 3.poc编写
+## 3.poc编写
 
 poc应由yaml编写，标准模板如下：
 
@@ -87,7 +87,7 @@ requests是一组http包，能直接配置http包的信息
 
   
 
-- body是post内容，默认为x-www-form-urlencoded，，示例如下：
+- body是post内容，默认为x-www-form-urlencoded，示例如下：
 
   - ```yaml
     body: user=qwe
@@ -122,8 +122,8 @@ requests是一组http包，能直接配置http包的信息
 detections为js语法，目前支持res对象：
 
 ```javascript
-res.code == 200  //返回true
-res.body.search("body")   //查找response的body的"body"字符串,存在返回true
+res.code == 200                    //返回true
+res.body.search("body")            //查找response的body的"body"字符串,存在返回true
 res.length <= 100
 res.header.search("Content-Type")  //查找response的header的"Content-Type"字符串,存在返回true
 ```
@@ -136,7 +136,9 @@ detections编写时只应该返回布尔值和数字，否则报错
 
 
 
-#### 4.其他用法
+
+
+## 4.其他用法
 
 1.用gluttony定制webshell
 
@@ -144,3 +146,6 @@ detections编写时只应该返回布尔值和数字，否则报错
 
 
 
+## 5.免责声明
+
+请勿用于非法途径，由工具使用者引起的一切法律问题与本人无关
